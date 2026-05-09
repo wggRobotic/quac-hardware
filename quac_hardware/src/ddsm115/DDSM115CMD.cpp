@@ -141,7 +141,7 @@ bool DDSM115CMD::set_mode(uint8_t id, int mode)
 bool DDSM115CMD::drive(uint8_t id, double velocity, uint8_t act, uint8_t brake)
 {
   int16_t rpm = (int16_t)(velocity / (2.0 * M_PI) * 60.0);
-  printf("%d\n", rpm);
+
   uint8_t cmd[] = 
   {
     (uint8_t) id,
