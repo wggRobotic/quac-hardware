@@ -194,10 +194,17 @@ bool DDSM115CMD::drive_feedback(uint8_t* id, uint8_t* mode, double* position, do
     );
     return false;
   }
-  else if (response[9] != maximCrc8(response, 9))
+  else
   {
-    set_error("CRC error in response");
-    return false;
+    uint8_t crc = maximCrc8(response, 9);
+
+    if (response[9] != crc)
+    {
+      set_error("CRC (%02x) error in response %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x", crc,
+        response[0], response[1], response[2], response[3], response[4], response[5], response[6], response[7], response[8], response[9]
+      );
+      return false;
+    }
   }
 
   int16_t drive_current = (response[2] << 8) + response[3];
